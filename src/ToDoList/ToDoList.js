@@ -2,29 +2,42 @@ import React from "react";
 import { useState } from "react";
 
 export default function ToDoList() {
-    const [tasks, setTasks] = useState(["Read SpringBoot", "Complete Assignments", "Prepare Breakfast", "Sleep for 2 hours", "Take a shower"]);
+    const [tasks, setTasks] = useState([
+        { text: "Read SpringBoot", completed: false},
+        { text: "Complete Assignments", completed: false},
+        { text: "Prepare Breakfast", completed: false},
+        { text: "Sleep for 2 hours", completed: false},
+        { text: "Take a shower", completed: false}]);
 
-    const handleEmptyClick = () => {
-        setTasks([]);
+    const markTaskCompletion = (index) => {
+        const newTasks = [...tasks];
+        newTasks[index].completed = !newTasks[index].completed;
+        setTasks(newTasks);
+    }
+
+    const handleRemoveCompletedClick = () => {
+        const newTasks = tasks.filter(task => !task.completed);
+        setTasks(newTasks);
     };
 
-    if (tasks.length === 0) {
-        return (
-          <div>
+    return (
+        <div>
+          {tasks.length === 0 ? (
             <p style={{ fontStyle: 'italic' }}>Nothing to do buddy. Sleep!</p>
-            <button onClick={handleEmptyClick}>Empty</button>
-          </div>
-        );
-      } else {
-        return (
-          <div>
+          ) : (
             <ul>
               {tasks.map((task, index) => (
-                <li key={index}>{task}</li>
+                <li
+                  key={index}
+                  style={{ textDecoration: task.completed ? 'line-through' : 'none', cursor: 'pointer' }}
+                  onClick={() => markTaskCompletion(index)}
+                >
+                  {task.text}
+                </li>
               ))}
             </ul>
-            <button onClick={handleEmptyClick}>Empty</button>
-          </div>
-        );
-      }
+          )}
+          <button onClick={handleRemoveCompletedClick}>Remove Completed</button>
+        </div>
+      );
 }
