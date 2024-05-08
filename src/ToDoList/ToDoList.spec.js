@@ -7,18 +7,14 @@ import ToDoList from "./ToDoList";
 describe('Basic rendering of ToDoList Components', () => {
 
     it('renders all the tasks', () => {
-
         const wrapper = shallow(<ToDoList />);
         expect(wrapper.find('li')).toHaveLength(5);
-
     });
 
     it('renders the remove completed button', () => {
-
         const wrapper = shallow(<ToDoList />);
         const removeCompletedButton = wrapper.find('#remove-completed');
         expect(removeCompletedButton.exists()).toBe(true);
-
     });
 
 
@@ -26,14 +22,20 @@ describe('Basic rendering of ToDoList Components', () => {
 
 describe('Testing functionality', () => {
 
-    it('marks tasks as completed when clicked', () => {
-        
+    it('should mark tasks as completed when clicked', () => {
         const { getByText } = render(<ToDoList />);
         const taskElement = getByText('Read SpringBoot');
-
         fireEvent.click(taskElement);
         expect(taskElement).toHaveStyle('text-decoration: line-through');
+    });
+    
 
+    it('removes completed tasks when "Remove Completed" button is clicked', () => {
+        const wrapper = shallow(<ToDoList />);
+        const removeCompletedButton = wrapper.find('#remove-completed');
+        wrapper.find('li').first().simulate('click');
+        removeCompletedButton.simulate('click');
+        expect(wrapper.find('li')).toHaveLength(4);
     });
 
 });
