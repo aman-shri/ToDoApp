@@ -23,7 +23,7 @@ export default function ToDoList() {
     return (
         <div>
           {tasks.length === 0 ? (
-            <p style={{ fontStyle: 'italic' }}>Nothing to do buddy. Sleep!</p>
+            <p id="no-task-message" style={{ fontStyle: 'italic' }}>Nothing to do buddy. Sleep!</p>
           ) : (
             <ul>
               {tasks.map((task, index) => (

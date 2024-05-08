@@ -11,6 +11,7 @@ describe('Basic rendering of ToDoList Components', () => {
         expect(wrapper.find('li')).toHaveLength(5);
     });
 
+
     it('renders the remove completed button', () => {
         const wrapper = shallow(<ToDoList />);
         const removeCompletedButton = wrapper.find('#remove-completed');
@@ -28,7 +29,7 @@ describe('Testing functionality', () => {
         fireEvent.click(taskElement);
         expect(taskElement).toHaveStyle('text-decoration: line-through');
     });
-    
+
 
     it('removes completed tasks when "Remove Completed" button is clicked', () => {
         const wrapper = shallow(<ToDoList />);
@@ -36,6 +37,18 @@ describe('Testing functionality', () => {
         wrapper.find('li').first().simulate('click');
         removeCompletedButton.simulate('click');
         expect(wrapper.find('li')).toHaveLength(4);
+    });
+
+
+    it('renders the "Nothing to do buddy. Sleep!" message when all tasks are completed', () => {
+        const wrapper = shallow(<ToDoList />);
+        const removeCompletedButton = wrapper.find('#remove-completed');
+        wrapper.find('li').forEach(task => {
+            task.simulate('click');
+        });
+        removeCompletedButton.simulate('click');
+        const messageElement = wrapper.find('#no-task-message');
+        expect(messageElement.text()).toBe('Nothing to do buddy. Sleep!');
     });
 
 });
