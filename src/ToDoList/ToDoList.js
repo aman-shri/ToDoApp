@@ -37,7 +37,9 @@ export default function ToDoList() {
               ))}
             </ul>
           )}
-          <button id="remove-completed" onClick={handleRemoveCompletedClick}>Remove Completed</button>
+          {tasks.length > 0 && (
+            <button id="remove-completed" onClick={handleRemoveCompletedClick}>Remove Completed</button>
+          )}
         </div>
       );
 }
