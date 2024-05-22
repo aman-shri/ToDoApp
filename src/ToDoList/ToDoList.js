@@ -19,7 +19,7 @@ export default function ToDoList() {
         const newTasks = tasks.filter(task => !task.completed);
         setTasks(newTasks);
     };
-
+//convert the task to component
     return (
         <div>
           {tasks.length === 0 ? (

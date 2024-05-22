@@ -4,20 +4,36 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import ToDoList from "./ToDoList";
 
-describe('Basic rendering of ToDoList Components', () => {
+//add checkboxes instead of strike through
 
+describe('Basic rendering of ToDoList Components', () => {
+    
     it('renders all the tasks', () => {
         const wrapper = shallow(<ToDoList />);
         expect(wrapper.find('li')).toHaveLength(5);
     });
-
-
+    
+    
     it('renders the remove completed button', () => {
         const wrapper = shallow(<ToDoList />);
         const removeCompletedButton = wrapper.find('#remove-completed');
         expect(removeCompletedButton.exists()).toBe(true);
     });
+    
+    //add a test to remove completed button when no task is there
+    it('removes the "Remove Completed" button when there are no tasks', () => {
+        const wrapper = shallow(<ToDoList />);
+        const removeCompletedButton = wrapper.find('#remove-completed');
 
+        wrapper.find('li').forEach(task => {
+            task.simulate('click');
+        });
+
+        removeCompletedButton.simulate('click');
+
+        const updatedRemoveCompletedButton = wrapper.find('#remove-completed');
+        expect(updatedRemoveCompletedButton.exists()).toBe(false);
+    });
 
 });
 
