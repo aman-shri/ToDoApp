@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import TaskItem from "./TaskItem";
+import "./ToDoList.css"
 
 export default function ToDoList() {
     const [tasks, setTasks] = useState([
@@ -22,9 +23,9 @@ export default function ToDoList() {
     };
 //convert the task to component
     return (
-        <div>
+        <div className="container">
           {tasks.length === 0 ? (
-            <p id="no-task-message" style={{ fontStyle: 'italic' }}>Nothing to do buddy. Sleep!</p>
+            <p id="no-task-message" className="italic">Nothing to do buddy. Sleep!</p>
           ) : (
             <ul>
             {tasks.map((task, index) => (

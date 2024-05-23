@@ -8,7 +8,7 @@ const TaskItem = ({ text, completed, onClick }) => (
                 checked = {completed}
                 onChange = {onClick}
             />
-            <span style={{ marginLeft: "5px" }}>{text}</span>
+            <span>{text}</span>
         </label>
     </li>
 );
