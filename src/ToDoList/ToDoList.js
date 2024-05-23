@@ -26,16 +26,19 @@ export default function ToDoList() {
             <p id="no-task-message" style={{ fontStyle: 'italic' }}>Nothing to do buddy. Sleep!</p>
           ) : (
             <ul>
-              {tasks.map((task, index) => (
-                <li
-                  key={index}
-                  style={{ textDecoration: task.completed ? 'line-through' : 'none', cursor: 'pointer' }}
-                  onClick={() => markTaskCompletion(index)}
-                >
-                  {task.text}
+            {tasks.map((task, index) => (
+                <li key={index}>
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={task.completed}
+                            onChange={() => markTaskCompletion(index)}
+                        />
+                        {task.text}
+                    </label>
                 </li>
-              ))}
-            </ul>
+            ))}
+        </ul>
           )}
           {tasks.length > 0 && (
             <button id="remove-completed" onClick={handleRemoveCompletedClick}>Remove Completed</button>

@@ -20,20 +20,6 @@ describe('Basic rendering of ToDoList Components', () => {
         expect(removeCompletedButton.exists()).toBe(true);
     });
     
-    //add a test to remove completed button when no task is there
-    it('removes the "Remove Completed" button when there are no tasks', () => {
-        const wrapper = shallow(<ToDoList />);
-        const removeCompletedButton = wrapper.find('#remove-completed');
-
-        wrapper.find('li').forEach(task => {
-            task.simulate('click');
-        });
-
-        removeCompletedButton.simulate('click');
-
-        const updatedRemoveCompletedButton = wrapper.find('#remove-completed');
-        expect(updatedRemoveCompletedButton.exists()).toBe(false);
-    });
 
 });
 
@@ -42,25 +28,41 @@ describe('Testing functionality', () => {
     it('should mark tasks as completed when clicked', () => {
         const { getByText } = render(<ToDoList />);
         const taskElement = getByText('Read SpringBoot');
-        fireEvent.click(taskElement);
-        expect(taskElement).toHaveStyle('text-decoration: line-through');
-    });
+        const checkbox = taskElement.querySelector('input[type="checkbox"]');
+        fireEvent.click(checkbox);
+        expect(checkbox.checked).toBe(true);
+    }); 
 
 
     it('removes completed tasks when "Remove Completed" button is clicked', () => {
         const wrapper = shallow(<ToDoList />);
         const removeCompletedButton = wrapper.find('#remove-completed');
-        wrapper.find('li').first().simulate('click');
+        wrapper.find('input[type="checkbox"]').first().simulate('change', { target: { checked: true } });
         removeCompletedButton.simulate('click');
         expect(wrapper.find('li')).toHaveLength(4);
+    });
+
+    //add a test to remove 'Remove Completed' button when no task is there
+    it('removes the "Remove Completed" button when there are no tasks', () => {
+        const wrapper = shallow(<ToDoList />);
+        const removeCompletedButton = wrapper.find('#remove-completed');
+
+        wrapper.find('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.simulate('change', { target: { checked: true } });
+        });
+
+        removeCompletedButton.simulate('click');
+
+        const updatedRemoveCompletedButton = wrapper.find('#remove-completed');
+        expect(updatedRemoveCompletedButton.exists()).toBe(false);
     });
 
 
     it('renders the "Nothing to do buddy. Sleep!" message when all tasks are completed', () => {
         const wrapper = shallow(<ToDoList />);
         const removeCompletedButton = wrapper.find('#remove-completed');
-        wrapper.find('li').forEach(task => {
-            task.simulate('click');
+        wrapper.find('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.simulate('change', { target: { checked: true } });
         });
         removeCompletedButton.simulate('click');
         const messageElement = wrapper.find('#no-task-message');

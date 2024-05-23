@@ -1,0 +1,14 @@
+/* ToDoList.css */
+
+.task-list {
+    list-style-type: none; /* Remove bullet points */
+}
+
+.task-list li {
+    margin-bottom: 5px; /* Adjust spacing between list items */
+}
+
+.task-list label {
+    display: flex; /* Use flex layout for checkbox and text */
+    align-items: center; /* Align items vertically */
+}
