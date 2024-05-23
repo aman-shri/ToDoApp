@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import TaskItem from "./TaskItem";
 
 export default function ToDoList() {
     const [tasks, setTasks] = useState([
@@ -27,16 +28,12 @@ export default function ToDoList() {
           ) : (
             <ul>
             {tasks.map((task, index) => (
-                <li key={index}>
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={task.completed}
-                            onChange={() => markTaskCompletion(index)}
-                        />
-                        {task.text}
-                    </label>
-                </li>
+                <TaskItem 
+                  key={index}
+                  text={task.text}
+                  completed={task.completed}
+                  onClick={() => markTaskCompletion(index)}
+                />
             ))}
         </ul>
           )}
